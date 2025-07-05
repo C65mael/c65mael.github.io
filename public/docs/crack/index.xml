@@ -1,0 +1,262 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C65mael – Crack</title>
+    <link>http://localhost:1313/docs/crack/</link>
+    <description>Recent content in Crack on C65mael</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    
+	  <atom:link href="http://localhost:1313/docs/crack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Crack</title>
+      <link>http://localhost:1313/docs/crack/crack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/crack/crack/</guid>
+      <description>
+        
+        
+        &lt;h6&gt;流程&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;流程&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%b5%81%e7%a8%8b&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;程序执行的逻辑可以理解为如下：&lt;/p&gt;
+&lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;
+  graph TB
+    A[点击注册按钮] --&amp;gt; B[读取注册码];
+    B --&amp;gt; C[判断注册码是否合法];
+    C --T--&amp;gt; D[提示用户是否注册成功];
+    C --F--&amp;gt; F[提示用户是否注册失败];
+    F --&amp;gt; C[判断注册码是否合法];
+    D --&amp;gt; C[判断注册码是否合法];
+&lt;/pre&gt;&lt;p&gt;关键就是&lt;code&gt;判断注册码是否合法&lt;/code&gt;这一步。&lt;/p&gt;
+&lt;p&gt;主要其实就是让程序断在注册失败的位置，然后单步跟程序返回到判断的位置。如果提示是弹窗的话就可以下断在&lt;code&gt;MessageBoxA&lt;/code&gt;的最后面。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;IDA&lt;/code&gt;里面进行中文搜索：在目标中添加后缀&lt;code&gt;-dCULTURE=all&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;调试&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;调试&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e8%b0%83%e8%af%95&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;进程与线程是宿主与寄宿者的关系，一个提供资源，一个使用资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;调试寄存器&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://c65mael.github.io/static/myassets-crack/tsjcq.png&#34; alt=&#34;image&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DR0-DR3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这四个寄存器用于存储最多四个硬件断点的线性地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DR6&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;DR6&lt;/code&gt;寄存器是调试状态寄存器，用于指示调试异常 (&lt;code&gt;#DB&lt;/code&gt;) 发生的原因和状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;L0, L1, L2, L3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这四个位分别对应&lt;code&gt;4&lt;/code&gt;个硬件断点（&lt;code&gt;DR0 ~ DR3&lt;/code&gt;），用于控制断点在仅对当前任务（或当前线程）层面是否生效。当任务切换时，这些断点会被自动清除或失效。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;G0, G1, G2, G3&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这四个位也分别对应&lt;code&gt;4&lt;/code&gt;个硬件断点（&lt;code&gt;DR0 ~ DR3&lt;/code&gt;），用于控制断点在“全局”层面（在所有任务中都生效，不随任务切换而失效）是否启用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;关于&lt;code&gt;Dr7=1&lt;/code&gt;可以断，&lt;code&gt;Dr7=2&lt;/code&gt;断不下来？的思考：&lt;/p&gt;
+&lt;p&gt;由于&lt;code&gt;Gx&lt;/code&gt;是设置全局断点的，设置的硬件断点将在所有任务和进程中都有效，大多数操作系统不会让你真正地对全局断点生效，要么直接忽略，要么在下一次切换或写寄存器时清掉那个&lt;code&gt;Gx&lt;/code&gt;位，导致实际执行时并没有开启硬件断点，于是“断不下来”。一般设置&lt;code&gt;Lx&lt;/code&gt;就可以了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;带壳调试&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;带壳调试&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e5%b8%a6%e5%a3%b3%e8%b0%83%e8%af%95&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;壳的加载过程：&lt;/p&gt;
+&lt;pre class=&#34;mermaid hx-mt-6&#34;&gt;
+  graph TB
+    A[运行程序] --&amp;gt; B[在内存中吐出真正的的代码];
+    B --&amp;gt; C[转到真实的OEP];
+    C --&amp;gt; D[执行真实的代码];
+	D --&amp;gt; E[执行到我们需要下断点的位置];
+&lt;/pre&gt;&lt;p&gt;在壳解码后的断点可以下&lt;code&gt;CreatWindowExA&lt;/code&gt;，&lt;code&gt;LoadLibraryA&lt;/code&gt;。在对应位置下硬件访问断点可以看到壳是在什么位置给我们吐代码的。&lt;/p&gt;
+&lt;p&gt;注意下断点时&lt;code&gt;CreatWindowExA&lt;/code&gt;与&lt;code&gt;CreatWindowExW&lt;/code&gt;都下，不是所有的&lt;code&gt;A&lt;/code&gt;都调用&lt;code&gt;W&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;花指令&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;花指令&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e8%8a%b1%e6%8c%87%e4%bb%a4&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;花指令的思路：构造恒成立的跳转，中间插无效数据。花指令防&lt;code&gt;IDA&lt;/code&gt;，防不了动态调试。&lt;/li&gt;
+&lt;li&gt;去花指令的话可以在&lt;code&gt;IDA&lt;/code&gt;中调试，遇到小跳的跳过去，然后把当前指令的上面直到比较的指令全部&lt;code&gt;nop&lt;/code&gt;掉就行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;TLS（线程局部存储）&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;tls线程局部存储&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tls%e7%ba%bf%e7%a8%8b%e5%b1%80%e9%83%a8%e5%ad%98%e5%82%a8&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;特征：先于&lt;code&gt;OEP&lt;/code&gt;执行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;函数解释：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;NtSetInformationThread&lt;/code&gt;：调用这个函数时，如果在第二个参数里指定&lt;code&gt;0x11&lt;/code&gt;这个值（意思是&lt;code&gt;ThreadHideFromDebugger&lt;/code&gt;），等于告诉操作系统，将所有附加的调试器统统取消掉。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;NtQueryInformationProcess&lt;/code&gt;：它的第二个参数可以用来查询进程的调试端口。如果进程被调试，那么返回的端口值会是&lt;code&gt;-1&lt;/code&gt;，否则就是其他的值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;反调试案例：&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;windows.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;#34;ntdll/ntdll.h&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma comment(linker,&amp;#34;/INCLUDE:_tls_used&amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DWORD isDebug &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; NTAPI &lt;span style=&#34;color:#a6e22e&#34;&gt;TLS_CALLBACK&lt;/span&gt;(PVOID DLLHandle,DWORD Reason,PVOID Reserved)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(Reason &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; DLL_PROCESS_ATTACH){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		NtSetInformationThread(GetCurrentThread(), ThreadHideFromDebugger, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		NtQueryInformationProcess(GetCurrentProcess(), ProcessDebugPort, (PVOID)&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;isDebug, &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(DWORD), NULL);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    MessageBoxA(NULL,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;,MB_OK);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma data_seg(&amp;#34;.CRT$XLX&amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;PIMAGE_TLS_CALLBACK pTLS_CALLBACKs[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {TLS_CALLBACK,NULL};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma data_seg()&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;易语言特征码&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;易语言特征码&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%98%93%e8%af%ad%e8%a8%80%e7%89%b9%e5%be%81%e7%a0%81&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;字符串比较函数特征码：&lt;code&gt;test edx,0x3&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-asm&#34; data-lang=&#34;asm&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;mov&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;edx&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;dword&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ptr&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ss&lt;/span&gt;:[&lt;span style=&#34;color:#66d9ef&#34;&gt;esp&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0x4&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;mov&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ecx&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;dword&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ptr&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;ss&lt;/span&gt;:[&lt;span style=&#34;color:#66d9ef&#34;&gt;esp&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0x8&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;test&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;edx&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;edx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;test&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;edx&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0x3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;断下后注意观察&lt;code&gt;ECX&lt;/code&gt;与&lt;code&gt;EDX&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;按钮事件特征码：&lt;code&gt;FF55FC5F5E&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;易语言体特征码：&lt;code&gt;FF25&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;提取特征码基本原则&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;提取特征码基本原则&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%8f%90%e5%8f%96%e7%89%b9%e5%be%81%e7%a0%81%e5%9f%ba%e6%9c%ac%e5%8e%9f%e5%88%99&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;一定不能包含绝对地址，如果有，一定要换成通配符&lt;/li&gt;
+&lt;li&gt;有&lt;code&gt;CALL&lt;/code&gt;也不行，如果有，也要换成通配符&lt;/li&gt;
+&lt;li&gt;有常量也不行，如果有，也要换成通配符&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>CrackEXT</title>
+      <link>http://localhost:1313/docs/crack/crackext/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/crack/crackext/</guid>
+      <description>
+        
+        
+        &lt;h6&gt;IDA修改错误&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;ida修改错误&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#ida%e4%bf%ae%e6%94%b9%e9%94%99%e8%af%af&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;修改返回值是哪个寄存器：&lt;code&gt;int __usercall sub_401020&amp;lt;edx&amp;gt;()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;壳&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;壳&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e5%a3%b3&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;分类：
+&lt;ol&gt;
+&lt;li&gt;基于&lt;code&gt;PE&lt;/code&gt;文件的保护：代码会在程序运行后原封不动的吐回去&lt;/li&gt;
+&lt;li&gt;基于代码的保护：吐回去的代码还是看不懂的代码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;反调试&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;反调试&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e5%8f%8d%e8%b0%83%e8%af%95&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;p&gt;分析一下，核心代码如下，需要获取&lt;code&gt;_TEB&lt;/code&gt;所以要导入下面的头文件：&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;winternl.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BOOL &lt;span style=&#34;color:#a6e22e&#34;&gt;check&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;wchar_t&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Buffer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; tmp;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Buffer &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; NtCurrentTeb()&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;ProcessEnvironmentBlock&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;ProcessParameters&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;CommandLine.Buffer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;256&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;i)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			&lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		tmp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Buffer&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;i;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	} &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; (&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;tmp);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(Buffer &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;通过&lt;code&gt;_TEB&lt;/code&gt;里面的&lt;code&gt;_PEB&lt;/code&gt;获取进程启动时的命令行缓冲区，应该是它的启动参数。之后检查倒数第二个字符，因为未调试时，某些加载器或启动配置可能会在命令行尾部保留一个空格；但是双击启动的程序后面不会有参数。&lt;/p&gt;
+&lt;h6&gt;伪调试&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;伪调试&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e4%bc%aa%e8%b0%83%e8%af%95&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;大致原理：&lt;/p&gt;
+&lt;p&gt;不使用正常的&lt;code&gt;0xCC&lt;/code&gt;或者硬件断点，自己定义一个断点方式（页异常，&lt;code&gt;hook&lt;/code&gt;等），然后接管程序的所有的断点以及调试&lt;code&gt;API&lt;/code&gt;调用等，转过来自己实现。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;RSA&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;rsa&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rsa&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;加密：&lt;code&gt;明文 ^ e mod n = 密文&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;解密：&lt;code&gt;密文 ^ d mod n = 明文&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;n&lt;/code&gt;的来源：任意两个互质数的乘积。比如&lt;code&gt;n = p * q&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;e&lt;/code&gt;的来源：随机取值，只需要满足&lt;code&gt;1&amp;lt;e&amp;lt;f(p,q)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;d&lt;/code&gt;的来源：&lt;code&gt;e * d mod f(p,q) = 1&lt;/code&gt;，可以推出&lt;code&gt;d&lt;/code&gt;，欧几里得定理&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

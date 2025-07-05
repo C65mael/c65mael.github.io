@@ -1,0 +1,25 @@
+baseURL: https://c65mael.github.io/
+languageCode: zh-cn
+title: C65mael
+theme: hextra
+
+menu:
+  main:
+    - name: 文档
+      pageRef: /docs
+      weight: 1
+    - name: 博客
+      pageRef: /blog
+      weight: 2
+    - name: 关于
+      pageRef: /about
+      weight: 3
+    - name: 搜索
+      weight: 4
+      params:
+        type: search
+    - name: GitHub
+      weight: 5
+      url: "https://github.com/C65mael"
+      params:
+        icon: github
